@@ -1,87 +1,87 @@
 <script>
+import { mapState, mapGetters } from 'vuex'
+import BlockCard from '../components/block-card'
 export default {
   name: 'generate-card',
+  components: {
+    BlockCard
+  },
+  computed: mapState({
+    isGenerating: state => state.isGenerating,
+    response: state => state.response
+  }),
   data () {
     return {
-      someJSONdata: [
-          {
-            id: '639276510421',
-            trxid: '60485621OI10',
-            date: '2010-12-13 10:02:11',
-            card: [ "15","23","32","48","65","14","16","44","58","72","5","22","F","55","62","7","18","33","49","70","8","25","37","57","63"]
-          },
-          {
-            id: '639276510421',
-            trxid: '60485621OI10',
-            date: '2010-12-13 10:02:11',
-            card: [ "15","23","32","48","65","14","16","44","58","72","5","22","F","55","62","7","18","33","49","70","8","25","37","57","63"]
-          },
-          {
-            id: '639276510421',
-            trxid: '60485621OI10',
-            date: '2010-12-13 10:02:11',
-            card: [ "15","23","32","48","65","14","16","44","58","72","5","22","F","55","62","7","18","33","49","70","8","25","37","57","63"]
-          }
-      ]
+      minQty:1,
+      formData: {
+        qty: 1
+      }
     }
+  },
+  methods: {
+    async generate () {
+      this.$f7.preloader.show()
+      let response = await this.$store.dispatch('generate', this.formData)
+      // console.log(response.result)
+      // for(let i=0; i<response.result.length; i++) {
+      //   let card = response.result[i]
+      //   this.printMe('card_'+card.id, 'html')
+      // }
+      this.$f7.preloader.hide()
+    },
+
+    printMe (id) {
+      setTimeout(function(){
+        // printJS(id, 'html')
+        printJS({ printable: id, type: 'html', header: id })
+        console.log(id)
+      }, 3000);
+    }
+
+  },
+  mounted() {
+    // do nothing
   }
 }
 </script>
-
-<style scoped>
-.block-bg {
-
-}
-
-.h-cell-bg {
-  color: red;
-  font-weight: bold;
-  background: #ffffff;
-}
-
-.b-cell {
-  border: #ccc solid 1px;
-}
-</style>
 
 
 <template>
   <f7-page>
     <f7-navbar title="Generate Card" back-link="Back"></f7-navbar>
-    <f7-block strong>
-
-      <f7-card v-for="(item, key) in someJSONdata" :key="key" >
-        <f7-card-header>{{ item.id }} </f7-card-header>
-        <f7-card-content class="block-bg">
-          <f7-row no-gap>
-            <f7-col width="20" class="text-align-center h-cell-bg b-cell">B</f7-col>
-            <f7-col width="20" class="text-align-center h-cell-bg b-cell">L</f7-col>
-            <f7-col width="20" class="text-align-center h-cell-bg b-cell">O</f7-col>
-            <f7-col width="20" class="text-align-center h-cell-bg b-cell">C</f7-col>
-            <f7-col width="20" class="text-align-center h-cell-bg b-cell">K</f7-col>
-
-            <f7-col width="20" class="text-align-center" v-for="(v, k) in item.card" :key="k" >{{ v }}</f7-col>
-          </f7-row>
-        </f7-card-content>
-        <f7-card-footer>{{ item.trxid }}</f7-card-footer>
-      </f7-card>
-
+    <!-- isGenerating : {{ isGenerating }} -->
+    <f7-block class="text-align-center" v-if="isGenerating">
+      <p>Processing please wait...</p>
     </f7-block>
 
-    <!-- <f7-block v-for="(item, key) in someJSONdata" :key="key">
-      <f7-row no-gap>
-        <f7-col width="20" class="text-align-center h-cell-bg b-cell">B</f7-col>
-        <f7-col width="20" class="text-align-center h-cell-bg b-cell">L</f7-col>
-        <f7-col width="20" class="text-align-center h-cell-bg b-cell">O</f7-col>
-        <f7-col width="20" class="text-align-center h-cell-bg b-cell">C</f7-col>
-        <f7-col width="20" class="text-align-center h-cell-bg b-cell">K</f7-col>
+    <f7-block id="samplePrint">
+      This is a test
+    </f7-block>
 
-        <f7-col width="20" class="text-align-center" v-for="(v, k) in item.card" :key="k" >{{ v }}</f7-col>
-      </f7-row>
-    </f7-block> -->
+    <f7-block v-if="!response">
+      <f7-list inline-labels no-hairlines-md>
+        <f7-list-item>
+          <f7-label>Qty</f7-label>
+          <f7-input
+            type="text"
+            placeholder="Enter number"
+            error-message="Only numbers please!"
+            required
+            validate
+            pattern="[0-9]*"
+            clear-button
+            :value="formData.qty"
+            @input="formData.qty = $event.target.value"
+            >
+          </f7-input>
+        </f7-list-item>
+      </f7-list>
+      <f7-button fill raised color="blue" @click="generate" >Generate</f7-button>
+    </f7-block>
 
-
-
+    <f7-block v-if="response"  v-for="(item, key) in response" :key="key" >
+      <block-card :card="item"></block-card>
+    </f7-block>
 
     <f7-block strong>
       <f7-link @click="$f7router.back()">Go back</f7-link>

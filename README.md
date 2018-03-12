@@ -28,3 +28,9 @@ App will be opened in browser at `http://localhost:8080/`
 ```
 npm run build
 ```
+
+### JSBarcode Options
+
+```
+https://github.com/lindell/JsBarcode#options
+```

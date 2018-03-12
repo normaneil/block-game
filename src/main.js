@@ -22,12 +22,15 @@ import App from './App';
 
 import printJS from 'print-js';
 
+import store from './store/index'
+
 // Init F7 Vue Plugin
 Vue.use(Framework7Vue, Framework7)
 
 // Init App
 new Vue({
   el: '#app',
+  store,
   template: '<app/>',
   // Init Framework7 by passing parameters here
   framework7: {
