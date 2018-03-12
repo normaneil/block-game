@@ -21,6 +21,8 @@
     </f7-block>
     <f7-list>
       <f7-list-item link="/generate-card/" title="Generate Card"></f7-list-item>
+      <f7-list-item link="/generate-barcode/" title="Generate Barcode"></f7-list-item>
+      <f7-list-item link="/scanner/" title="Scanner"></f7-list-item>
     </f7-list>
   </f7-page>
 </template>

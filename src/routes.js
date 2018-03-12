@@ -8,6 +8,8 @@ import PanelLeftPage from './pages/panel-left.vue';
 import PanelRightPage from './pages/panel-right.vue';
 
 import GenerateCardPage from './pages/generate-card.vue';
+import ScannerPage from './pages/scanner.vue';
+import GenerateBarcodePage from './pages/generate-barcode.vue';
 
 export default [
   {
@@ -17,6 +19,14 @@ export default [
   {
     path: '/generate-card/',
     component: GenerateCardPage,
+  },
+  {
+    path: '/scanner/',
+    component: ScannerPage,
+  },
+  {
+    path: '/generate-barcode/',
+    component: GenerateBarcodePage,
   },
   {
     path: '/panel-left/',
