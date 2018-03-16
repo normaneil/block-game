@@ -16,7 +16,8 @@ export default new Vuex.Store({
     isGenerating: false,
     response: null,
     fieldErrors: {},
-    generalErrors: []
+    generalErrors: [],
+    isLoggedin: false
   },
   actions,
   getters,

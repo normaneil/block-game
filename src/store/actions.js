@@ -1,6 +1,46 @@
 import axios from 'axios'
 
 export default {
+  async login ({
+    commit,
+    state,
+    dispatch
+  }, data) {
+    try {
+
+      const mobile = 1
+      let response = {}
+
+      // console.log(typeof data.mobile)
+      // console.log(typeof mobile)
+
+      let isLogin = false
+      if(parseInt(data.mobile) == mobile) {
+        isLogin = true
+      } else {
+        isLogin = false
+      }
+
+      // let response = await apios.post('/device/issue_tokens', data)
+      // console.log(isLogin)
+
+      commit('applyLoginStatus', {
+        status: isLogin
+      })
+
+      return {
+        success: true,
+        response: { isLogin: isLogin}
+      }
+    }
+    catch (e) {
+      console.log(e)
+      return {
+        success: false,
+        response: e
+      }
+    }
+  },
   async generate ({
     commit,
     state,
@@ -46,10 +86,6 @@ export default {
       return {
         success: true,
         result: response
-      }
-      return {
-        success: false,
-        result: []
       }
     }
     catch (e) {

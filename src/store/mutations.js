@@ -5,5 +5,9 @@ export default {
   },
   applyResponse (state, payload) {
     state.response = payload.response
+  },
+  applyLoginStatus (state, payload) {
+    state.isLoggedin = payload.status
   }
+
 }

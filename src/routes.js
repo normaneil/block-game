@@ -10,10 +10,15 @@ import PanelRightPage from './pages/panel-right.vue';
 import GenerateCardPage from './pages/generate-card.vue';
 import ScannerPage from './pages/scanner.vue';
 import GenerateBarcodePage from './pages/generate-barcode.vue';
+import MainPage from './pages/main-page.vue';
 
 export default [
   {
     path: '/',
+    component: MainPage,
+  },
+  {
+    path: '/home/',
     component: HomePage,
   },
   {
